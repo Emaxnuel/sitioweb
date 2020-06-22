@@ -7,14 +7,8 @@
   <title>3js</title>
 
   <style>
-    body {
-      margin: 0;
-    }
-
-    #c {
-      width: 100%;
-      height: 100%;
-    }
+			body { margin: 0; }
+			canvas { display: block; width: 100%; height: 100%; }
   </style>
 </head>
 
@@ -25,15 +19,8 @@
 
 <script src="https://threejs.org/build/three.js"></script>
 <script src="orbit.js"></script>
-<!-- <script src="gtloader.js"></script> -->
-
+<script src="GLTFLoader.js"></script>
 <script>
-  var n = 0;
-  // var loader = new GLTFLoader();
-
-
-
-
   function main() {
     const canvas = document.querySelector('#c');
     const renderer = new THREE.WebGLRenderer({
@@ -55,6 +42,8 @@
 
     const scene = new THREE.Scene();
 
+
+
     {
       const color = 0xFFFFFF;
       const intensity = 1;
@@ -63,37 +52,23 @@
       scene.add(light);
     }
 
+    var loader = new THREE.GLTFLoader();
+    loader.load('zen.gltf', (gltf) => {
+      scene.add(gltf.scene);
+    });
 
 
-    const boxWidth = 1;
-    const boxHeight = 1;
-    const boxDepth = 1;
-    const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
 
-    function makeInstance(geometry, color, x) {
-      const material = new THREE.MeshPhongMaterial({
-        color
-      });
 
-      const cube = new THREE.Mesh(geometry, material);
-      scene.add(cube);
 
-      cube.position.x = x;
 
-      return cube;
-    }
 
-    const cubes = [
-      makeInstance(geometry, 0x44aa88, 0),
-      makeInstance(geometry, 0x8844aa, -2),
-      makeInstance(geometry, 0xaa8844, 2),
-    ];
 
     const bgScene = new THREE.Scene();
     let bgMesh; {
       const loader = new THREE.TextureLoader();
       const texture = loader.load(
-        'https://images.dog.ceo/breeds/otterhound/n02091635_142.jpg',
+        'https://1.bp.blogspot.com/-zKslDr6l_zU/WAJONfkBQwI/AAAAAAAAEC0/EdH4LYkSDUgOQOnsBTBQ2YDO90IResjQACLcB/s1600/hdr.clouds.scenary%2B%25281%2529.jpg',
       );
       texture.magFilter = THREE.LinearFilter;
       texture.minFilter = THREE.LinearFilter;
@@ -125,20 +100,12 @@
 
     function render(time) {
       time *= 0.001;
-      n += 0.1;
 
-        if (resizeRendererToDisplaySize(renderer)) {
-          const canvas = renderer.domElement;
-          camera.aspect = canvas.clientWidth / canvas.clientHeight;
-          camera.updateProjectionMatrix();
-        }
-
-      cubes.forEach((cube, ndx) => {
-        const speed = 1 + ndx * .1;
-        const rot = time * speed;
-        cube.rotation.x = Math.sin(n);
-        cube.rotation.y = Math.sin(n);
-      });
+      if (resizeRendererToDisplaySize(renderer)) {
+        const canvas = renderer.domElement;
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        camera.updateProjectionMatrix();
+      }
 
       bgMesh.position.copy(camera.position);
       renderer.render(bgScene, camera);
