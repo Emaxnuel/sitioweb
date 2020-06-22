@@ -41,6 +41,11 @@
     controls.update();
 
     const scene = new THREE.Scene();
+    const fogNear = 1;
+    const fogFar = 3;
+    const color = 'white';
+    scene.fog = new THREE.Fog(color, fogNear, fogFar);
+    scene.background = new THREE.Color(color);
 
     {
       const color = 0xFFFFFF;
