@@ -8,7 +8,7 @@
 
   <style>
 			body { margin: 0; }
-			canvas { display: block; width: 100%; height: 100%; }
+			canvas { display: block; width: 100%; height: 100vh; }
   </style>
 </head>
 
@@ -42,8 +42,6 @@
 
     const scene = new THREE.Scene();
 
-
-
     {
       const color = 0xFFFFFF;
       const intensity = 1;
@@ -56,13 +54,6 @@
     loader.load('zen.gltf', (gltf) => {
       scene.add(gltf.scene);
     });
-
-
-
-
-
-
-
 
     const bgScene = new THREE.Scene();
     let bgMesh; {
