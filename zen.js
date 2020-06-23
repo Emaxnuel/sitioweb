@@ -5,17 +5,6 @@ var renderer = new THREE.WebGLRenderer({
   canvas
 });
 
-//Controles
-var moveForward = false;
-var moveBackward = false;
-var moveLeft = false;
-var moveRight = false;
-var canJump = false;
-
-var prevTime = performance.now();
-var velocity = new THREE.Vector3();
-var direction = new THREE.Vector3();
-var vertex = new THREE.Vector3();
 
 function main() {
 
@@ -26,13 +15,10 @@ function main() {
   const near = 0.1;
   const far = 100;
   camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.z = 5;
-  camera.position.y = 1;
-  camera.position.x = 3;
+  // camera.position.z = 5;
+  // camera.position.y = 1;
+  // camera.position.x = 3;
 
-  // const controls = new THREE.OrbitControls(camera, canvas);
-  // controls.target.set(0, 0, 0);
-  // controls.update();
 
   const scene = new THREE.Scene();
   const fogNear = 1;
@@ -40,6 +26,10 @@ function main() {
   const color = '#E6E6FA';
   scene.fog = new THREE.Fog(color, fogNear, fogFar);
   scene.background = new THREE.Color(color);
+
+  const controls = new THREE.OrbitControls(camera, canvas);
+  camera.position.set( 0, 0, 1 );
+  controls.update();
 
   {
     const color = 0xFFFFFF;
@@ -49,6 +39,7 @@ function main() {
     scene.add(light);
   }
 
+  //El (gltf) => { } es otra manera de escribir function(){}.
   var loader = new THREE.GLTFLoader();
   loader.load('zen.gltf', (gltf) => {
     scene.add(gltf.scene);
@@ -89,74 +80,74 @@ function main() {
   }
 
   // Cámara en primera persona (PointerLockControls)
-  var controls = new THREE.PointerLockControls(camera, document.body);
-  controls.movementSpeed = 1000;
-  controls.lookSpeed = 0.1;
+  // var controls = new THREE.PointerLockControls(camera, document.body);
+  // controls.movementSpeed = 1000;
+  // controls.lookSpeed = 0.1;
 
-  scene.add(controls.getObject());
-  var onKeyDown = function (event) {
+  // scene.add(controls.getObject());
+  // var onKeyDown = function (event) {
 
-    switch (event.keyCode) {
+  //   switch (event.keyCode) {
 
-      case 38: // up
-      case 87: // w
-        moveForward = true;
-        break;
+  //     case 38: // up
+  //     case 87: // w
+  //       moveForward = true;
+  //       break;
 
-      case 37: // left
-      case 65: // a
-        moveLeft = true;
-        break;
+  //     case 37: // left
+  //     case 65: // a
+  //       moveLeft = true;
+  //       break;
 
-      case 40: // down
-      case 83: // s
-        moveBackward = true;
-        break;
+  //     case 40: // down
+  //     case 83: // s
+  //       moveBackward = true;
+  //       break;
 
-      case 39: // right
-      case 68: // d
-        moveRight = true;
-        break;
+  //     case 39: // right
+  //     case 68: // d
+  //       moveRight = true;
+  //       break;
 
-      case 32: // space
-        if (canJump === true) velocity.y += 350;
-        canJump = false;
-        break;
+  //     case 32: // space
+  //       if (canJump === true) velocity.y += 350;
+  //       canJump = false;
+  //       break;
 
-    }
+  //   }
 
-  };
+  // };
 
-  var onKeyUp = function (event) {
+  // var onKeyUp = function (event) {
 
-    switch (event.keyCode) {
+  //   switch (event.keyCode) {
 
-      case 38: // up
-      case 87: // w
-        moveForward = false;
-        break;
+  //     case 38: // up
+  //     case 87: // w
+  //       moveForward = false;
+  //       break;
 
-      case 37: // left
-      case 65: // a
-        moveLeft = false;
-        break;
+  //     case 37: // left
+  //     case 65: // a
+  //       moveLeft = false;
+  //       break;
 
-      case 40: // down
-      case 83: // s
-        moveBackward = false;
-        break;
+  //     case 40: // down
+  //     case 83: // s
+  //       moveBackward = false;
+  //       break;
 
-      case 39: // right
-      case 68: // d
-        moveRight = false;
-        break;
+  //     case 39: // right
+  //     case 68: // d
+  //       moveRight = false;
+  //       break;
 
-    }
+  //   }
 
-  };
+  // };
 
-  document.addEventListener('keydown', onKeyDown, false);
-  document.addEventListener('keyup', onKeyUp, false);
+  // document.addEventListener('keydown', onKeyDown, false);
+  // document.addEventListener('keyup', onKeyUp, false);
 
 
   // Fin de bloque
