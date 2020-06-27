@@ -15,23 +15,41 @@
       display: block;
       width: 100%;
       height: 100vh;
+      background-color: white;
     }
 
     h1 {
       position: absolute;
     }
+
+
+  body {
+      margin: 0;
+  }
+  #c {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      background-color: white;
+      background-size: cover;
+  }
+
+
+
   </style>
 </head>
 
 <body>
+  <audio autoplay>
+    <source src="audioAqui.mp3" type="audio/ogg">
+  </audio>
   <canvas id="c"></canvas>
 </body>
 
 <script src="https://threejs.org/build/three.js"></script>
 <script src="orbit.js"></script>
+<script src="FlyControls.js"></script>
 <script src="GLTFLoader.js"></script>
-  <script src="FlyControls.js"></script>
-
 <!-- <script src="FirstPersonControls.js"></script> -->
 <!-- <script src="PointerLockControls.js"></script> -->
 <script src="zen.js"></script>
