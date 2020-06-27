@@ -24,8 +24,8 @@ function main() {
   const fogNear = 1;
   const fogFar = 3;
   const color = '#E6E6FA';
-  scene.fog = new THREE.Fog(color, fogNear, fogFar);
-  scene.background = new THREE.Color(color);
+  //scene.fog = new THREE.Fog(color, fogNear, fogFar);
+  //scene.background = new THREE.Color(color);
 
   const controls = new THREE.OrbitControls(camera, canvas);
   camera.position.set( 0, 0, 1 );
