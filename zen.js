@@ -16,7 +16,7 @@ function main() {
   const fov = 75;
   const aspect = 2; // the canvas default
   const near = 0.1;
-  const far = 100;
+  const far = 400;
   camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
   // camera.position.z = 5;
   // camera.position.y = 1;
@@ -26,7 +26,7 @@ function main() {
 
 
   const scene = new THREE.Scene();
-  const fogNear = 100;
+  const fogNear = 400;
   const fogFar = 1;
   const color = 'white';
   scene.fog = new THREE.Fog(color, fogNear, fogFar);
@@ -39,7 +39,7 @@ function main() {
 
   controls = new THREE.FlyControls(camera, renderer.domElement);
 
-  controls.movementSpeed = 1000;
+  controls.movementSpeed = 100;
   controls.domElement = renderer.domElement;
   controls.autoForward = false;
 
@@ -93,14 +93,6 @@ function main() {
     return needResize;
   }
 
-  var skyGeo = new THREE.SphereGeometry(1000, 25, 25);
-  var material = new THREE.MeshPhongMaterial({
-    color: 'whitehite',
-  });
-  var sky = new THREE.Mesh(skyGeo, material);
-  sky.material.side = THREE.BackSide;
-  sky.position.set(0, 0, 0);
-  scene.add(sky);
 
 
   // Cámara en primera persona (PointerLockControls)
