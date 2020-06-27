@@ -1,9 +1,12 @@
 var camera;
 var canvas = document.querySelector('#c');
+var clock = new THREE.Clock();
 
 var renderer = new THREE.WebGLRenderer({
   canvas
 });
+
+var controls;
 
 
 function main() {
@@ -20,18 +23,28 @@ function main() {
   // camera.position.x = 3;
 
 
+
+
   const scene = new THREE.Scene();
-  const fogNear = 1;
-  const fogFar = 3;
-  const color = '#E6E6FA';
-  //scene.fog = new THREE.Fog(color, fogNear, fogFar);
-  //scene.background = new THREE.Color(color);
+  const fogNear = 100;
+  const fogFar = 1;
+  const color = 'white';
+  scene.fog = new THREE.Fog(color, fogNear, fogFar);
+  scene.background = new THREE.Color(color);
 
-  const controls = new THREE.OrbitControls(camera, canvas);
-  camera.position.set( 0, 0, 1 );
-  controls.update();
+  // const controls = new THREE.OrbitControls(camera, canvas);
+  // camera.position.set( 0, 0, 1 );
+  // controls.update();
 
-  {
+
+  controls = new THREE.FlyControls(camera, renderer.domElement);
+
+  controls.movementSpeed = 1000;
+  controls.domElement = renderer.domElement;
+  controls.autoForward = false;
+
+
+  controls.dragToLook = false; {
     const color = 0xFFFFFF;
     const intensity = 1;
     const light = new THREE.DirectionalLight(color, intensity);
@@ -42,7 +55,7 @@ function main() {
   //El (gltf) => { } es otra manera de escribir function(){}.
   var loader = new THREE.GLTFLoader();
   loader.load('zen.gltf', (gltf) => {
-    gltf.scene.scale.set(100,100,100) // scale here
+    gltf.scene.scale.set(100, 100, 100) // scale here
     scene.add(gltf.scene);
   });
 
@@ -79,6 +92,16 @@ function main() {
     }
     return needResize;
   }
+
+  var skyGeo = new THREE.SphereGeometry(1000, 25, 25);
+  var material = new THREE.MeshPhongMaterial({
+    color: 'whitehite',
+  });
+  var sky = new THREE.Mesh(skyGeo, material);
+  sky.material.side = THREE.BackSide;
+  sky.position.set(0, 0, 0);
+  scene.add(sky);
+
 
   // Cámara en primera persona (PointerLockControls)
   // var controls = new THREE.PointerLockControls(camera, document.body);
@@ -154,7 +177,9 @@ function main() {
   // Fin de bloque
 
   function render(time) {
-    time *= 0.001;
+    var delta = clock.getDelta();
+    time *= 0.0001;
+    controls.update(delta);
 
     if (resizeRendererToDisplaySize(renderer)) {
       const canvas = renderer.domElement;
