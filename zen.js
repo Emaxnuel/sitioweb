@@ -24,8 +24,8 @@ function main() {
   const fogNear = 1;
   const fogFar = 3;
   const color = '#E6E6FA';
-  // scene.fog = new THREE.Fog(color, fogNear, fogFar);
-  // scene.background = new THREE.Color(color);
+  scene.fog = new THREE.Fog(color, fogNear, fogFar);
+  scene.background = new THREE.Color(color);
 
   const controls = new THREE.OrbitControls(camera, canvas);
   camera.position.set( 0, 0, 1 );
@@ -42,6 +42,7 @@ function main() {
   //El (gltf) => { } es otra manera de escribir function(){}.
   var loader = new THREE.GLTFLoader();
   loader.load('zen.gltf', (gltf) => {
+    gltf.scene.scale.set(100,100,100) // scale here
     scene.add(gltf.scene);
   });
 
@@ -170,6 +171,5 @@ function main() {
 
   requestAnimationFrame(render);
 }
-
 
 main();
